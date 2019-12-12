@@ -33,7 +33,9 @@ module.exports = {
 
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    https: true
+    https: true,
+    cert: 'cert/localhost.crt',
+    key: 'cert/localhost.key'
   },
 
   plugins: [
