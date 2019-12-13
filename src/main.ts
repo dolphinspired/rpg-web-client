@@ -1,4 +1,6 @@
 import * as Phaser from 'phaser';
+import { SocketService } from './services/socket';
+import { ChatMessage } from './types';
 
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
@@ -16,6 +18,14 @@ export class GameScene extends Phaser.Scene {
   public create() {
     this.square = this.add.rectangle(400, 400, 100, 100, 0xFFFFFF) as any;
     this.physics.add.existing(this.square);
+
+    const sock = new SocketService();
+    sock.init();
+    window['sock'] = sock;
+    const observable = sock.onMessage();
+    observable.subscribe((m: ChatMessage) => {
+      console.log('[message]'+JSON.stringify(m))
+    })
   }
 
   public update() {

@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/dolphinspired/rpg-web-client#readme",
   "dependencies": {
-    "phaser": "^3.21.0"
+    "phaser": "^3.21.0",
+    "rxjs": "^6.5.3",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
+    "@types/socket.io-client": "^1.4.32",
     "copy-webpack-plugin": "^5.0.5",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.3",
