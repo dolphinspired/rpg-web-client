@@ -8,6 +8,19 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   key: 'Game',
 };
 
+function socketeering() {
+  const sock = new SocketService();
+  sock.init();
+  window['sock'] = sock.socket;
+
+  sock.on<ChatMessage>('message').subscribe((m: ChatMessage) => {
+    console.log('[message]'+JSON.stringify(m))
+  });
+  sock.on('getdata').subscribe((b: any) => {
+    console.log('[getdata]'+JSON.stringify(b))
+  })
+}
+
 export class GameScene extends Phaser.Scene {
   private square: Phaser.GameObjects.Rectangle & { body: Phaser.Physics.Arcade.Body };
 
@@ -19,13 +32,7 @@ export class GameScene extends Phaser.Scene {
     this.square = this.add.rectangle(400, 400, 100, 100, 0xFFFFFF) as any;
     this.physics.add.existing(this.square);
 
-    const sock = new SocketService();
-    sock.init();
-    window['sock'] = sock;
-    const observable = sock.onMessage();
-    observable.subscribe((m: ChatMessage) => {
-      console.log('[message]'+JSON.stringify(m))
-    })
+    socketeering(); // experimental socket stuff
   }
 
   public update() {
